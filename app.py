@@ -131,7 +131,8 @@ def page_overview():
 def page_cpu():
     page_header("cpu", "Part A · Processes", "CPU scheduling with DVFS",
                 "Who runs next, and how fast. Every millisecond is simulated and priced in energy.", "Aarth Goyal")
-    left, right = st.columns([1, 2.3], gap="medium")
+    kpi_slot = st.container()
+    left, right = st.columns([1.25, 2.2], gap="medium")
     with left:
         with st.container(border=True):
             section("Workload")
@@ -142,7 +143,8 @@ def page_cpu():
             else:
                 data = [(t.pid, t.arrival, t.burst, t.priority) for t in battery_lab.generate_workload(6, 7)]
             df_in = st.data_editor(pd.DataFrame(data, columns=["PID", "Arrival", "Burst", "Priority"]), num_rows="dynamic",
-                                   width="stretch", key="cpu_in_" + preset, hide_index=True)
+                                   width="stretch", key="cpu_in_" + preset, hide_index=True,
+                                   column_config={c: st.column_config.Column(width="small") for c in ["PID", "Arrival", "Burst", "Priority"]})
         with st.container(border=True):
             section("Policy")
             algo = st.selectbox("Scheduling algorithm", cpu.ALGORITHMS, index=5)
@@ -157,14 +159,15 @@ def page_cpu():
     res = cpu.simulate(procs, algo, gov, q, cs, budget)
     perf = cpu.simulate(procs, algo, "performance", q, cs, budget)
     saving = 1 - res.energy_mj / perf.energy_mj if perf.energy_mj else 0
-    with right:
-        kpis([dict(label="Waiting", value=f"{res.avg_waiting:.2f}", unit="ms", icon="clock", tone="indigo"),
+    with kpi_slot:
+        kpis([dict(label="Avg waiting", value=f"{res.avg_waiting:.2f}", unit="ms", icon="clock", tone="indigo"),
               dict(label="Turnaround", value=f"{res.avg_turnaround:.2f}", unit="ms", icon="route", tone="teal"),
               dict(label="Energy", value=f"{res.energy_mj:.1f}", unit="mJ", icon="bolt", tone="amber",
                    sub=f'<span class="{"up" if saving >= 0 else "down"}">{saving:+.0%}</span> vs performance'),
-              dict(label="Battery", value=f"{res.battery_hours:.1f}", unit="h", icon="battery", tone="green",
+              dict(label="Battery life", value=f"{res.battery_hours:.1f}", unit="h", icon="battery", tone="green",
                    sub="repeats every 1 s"),
               dict(label="Switches", value=res.context_switches, icon="swap", tone="red")])
+    with right:
         tab1, tab2, tab3, tab4 = st.tabs(["Timeline", "Per process", "Compare all policies", "Latency-budget sweep"])
         with tab1:
             with st.container(border=True):
