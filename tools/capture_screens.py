@@ -8,10 +8,10 @@ from playwright.async_api import async_playwright
 
 OUT = Path(sys.argv[1] if len(sys.argv) > 1 else "screenshots")
 OUT.mkdir(exist_ok=True)
-URL = "http://localhost:8501/?page={}"
+URL = "http://localhost:8501/{}"
 
 SHOTS = [  # (file name, page, tab to click or None)
-    ("01_overview", "home", None),
+    ("01_overview", "", None),
     ("02_cpu", "cpu", None),
     ("03_memory_replacement", "memory", None),
     ("04_memory_belady", "memory", "Belady's anomaly"),
