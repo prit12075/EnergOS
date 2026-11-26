@@ -10,7 +10,7 @@ extra question about each of them: *what does this decision cost in battery?*
 | `energos/energy.py`, `energos/cpu.py` | Aarth | FCFS, SJF, SRTF, Priority (± preemption), Round Robin, MLFQ on a tick-based simulator with 5 DVFS governors (performance, powersave, ondemand, schedutil, **latency-budget**) and an energy/battery model |
 | `energos/memory.py`, `energos/disk.py` | Prit | Address translation, FIFO / LRU / Optimal / Clock page replacement, Belady's anomaly, FCFS / SSTF / SCAN / C-SCAN / LOOK / C-LOOK disk scheduling, with fault and seek energy |
 | `energos/sync.py`, `energos/deadlock.py`, `energos/battery_lab.py`, `energos/history.py` | Krishna | Race condition, producer–consumer with semaphores, dining philosophers (real threads); Banker's algorithm, deadlock detection, wait-for graph; whole-workload battery lab; SQLite run history |
-| `app.py` | all | Streamlit dashboard with one page per module |
+| `app.py`, `ui.py`, `assets/` | all | Streamlit dashboard: sidebar navigation, KPI cards, timeline scrubber, page-replacement player, animated disk head, battery gauge and energy-flow diagram |
 
 ## Run it
 
@@ -46,13 +46,8 @@ All constants live at the top of `energos/energy.py` so they can be changed in o
 | Disk queue 98…67, head 53: FCFS / SSTF / SCAN↓ / C-SCAN↑ | 640 / 236 / 236 / 382 | 640 / 236 / 236 / 382 |
 | Banker's state (3,3,2 available) | safe, starts with P1 | P1 → P3 → P4 → P0 → P2 |
 
-## Repository contents
+## Team
 
-| Folder | What is inside |
-|---|---|
-| `energos/` | the simulator engines (one module per OS topic) |
-| `app.py` | Streamlit dashboard |
-| `tests/` | 28 pytest checks against textbook examples |
+Aarth Goyal (AP24110010685) · Prit Patel (AP24110011578) · Krishna Karthikeya Burra (AP24110011237)
 
-**Team:** Aarth Goyal (AP24110010685) · Prit Patel (AP24110011578) · Krishna Karthikeya Burra (AP24110011237)
-**Guide:** Dr. Shaiju Panchikkil, Department of CSE, SRM University AP
+Guide: Dr. Shaiju Panchikkil, Department of CSE, SRM University AP
