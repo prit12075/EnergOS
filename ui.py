@@ -90,8 +90,9 @@ CSS = """
 --amber:#F59E0B;--red:#DC2626;--indigo:#4F46E5;--teal:#0891B2;--shadow:0 1px 2px rgba(16,24,20,.04),0 4px 16px rgba(16,24,20,.05)}
 .stApp{font-family:Inter,-apple-system,"Segoe UI",sans-serif}
 .stApp{background:var(--bg)}
-[data-testid="stHeader"]{background:transparent;height:0}
-[data-testid="stToolbar"],[data-testid="stDecoration"]{display:none}
+[data-testid="stHeader"]{background:transparent}
+[data-testid="stDecoration"],[data-testid="stAppDeployButton"],[data-testid="stMainMenu"],[data-testid="stToolbarActions"]{display:none}
+[data-testid="stExpandSidebarButton"],[data-testid="stSidebarCollapsedControl"]{visibility:visible!important;display:flex!important;opacity:1!important}
 .block-container{padding-top:1.6rem;padding-bottom:3rem;max-width:1380px}
 h1,h2,h3{letter-spacing:-.01em}
 /* sidebar */
