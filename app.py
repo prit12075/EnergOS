@@ -163,7 +163,8 @@ def page_cpu():
         kpis([dict(label="Avg waiting", value=f"{res.avg_waiting:.2f}", unit="ms", icon="clock", tone="indigo"),
               dict(label="Turnaround", value=f"{res.avg_turnaround:.2f}", unit="ms", icon="route", tone="teal"),
               dict(label="Energy", value=f"{res.energy_mj:.1f}", unit="mJ", icon="bolt", tone="amber",
-                   sub=f'<span class="{"up" if saving >= 0 else "down"}">{saving:+.0%}</span> vs performance'),
+                   sub=(f'<span class="up">{saving:.0%} less</span> than full speed' if saving >= 0
+                        else f'<span class="down">{-saving:.0%} more</span> than full speed')),
               dict(label="Battery life", value=f"{res.battery_hours:.1f}", unit="h", icon="battery", tone="green",
                    sub="repeats every 1 s"),
               dict(label="Switches", value=res.context_switches, icon="swap", tone="red")])
